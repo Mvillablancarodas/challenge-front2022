@@ -10,7 +10,7 @@
 /*-----------------------------------------------------*/
 /*-----------------------------------------------------*/
 .container__filter {
-	width: 80%;
+	width: 1024px;
 	background: white;
 	border: 2px solid black;
 	display: flex;
@@ -32,40 +32,48 @@
 /*-----------------------------------------------------*/
 /*-----------------------------------------------------*/
 .container__carsList {
-	width: 78%;
+	width: 1024px;
 	border: 2px solid black;
 }
 
 .carsList__carItem {
+	height: 550px;
 	background: white;
-	display: flex;
-	flex-direction: column;
+	padding: 20px;
+	display: grid;
+	grid-template-rows: 1fr 3fr;
+	grid-template-columns: 1fr 2fr;
+	grid-column-gap: 90px;
+	grid-row-gap: 45px;
+	justify-content: center;
 }
 /*-----------------------------------------------------*/
-.carItem__head {
-	display: flex;
-	/*justify-content: space-between;*/
-}
-
 .carItem__head--img {
-	width: 30%;
+	margin-left: 12px;
+	grid-row: 1/2;
+	grid-column: 1/2;
+	justify-content: center;
+	align-items: center;
 }
 
+.carItem__head--img img {
+	width: 300px;
+	object-fit: cover;
+}
 .carItem__head--details {
-	width: 70%;
+	margin-right: 50px;
+	grid-row: 1/2;
+	grid-column: 2/3;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
 /*-----------------------------------------------------*/
-.carItem__main {
-	display: flex;
-	justify-content: space-between;
-}
-
 .carItem__main--charact {
 	margin-left: 12px;
+	grid-row: 2/3;
+	grid-column: 1/2;
 }
 
 .carItem__main--charact ul {
@@ -88,6 +96,8 @@
 
 .carItem__main--rates {
 	margin-right: 12px;
+	grid-row: 2/3;
+	grid-column: 2/3;
 }
 
 .carItem__main--rates ul {
@@ -98,6 +108,7 @@
 .carItem__main--rates ul li {
 	margin: 0px 35px 35px 0px;	
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 	column-gap: 10px;
 }
