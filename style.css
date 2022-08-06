@@ -1,0 +1,106 @@
+.container {
+	height: 100vh;
+	width: 100vw;
+	background: lightgrey;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 22px;
+}
+/*-----------------------------------------------------*/
+/*-----------------------------------------------------*/
+.container__filter {
+	width: 80%;
+	background: white;
+	border: 2px solid black;
+	display: flex;
+	justify-content: space-around;
+}
+
+.filter__select {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 20px;
+}
+
+.filter__checkbox {
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+/*-----------------------------------------------------*/
+/*-----------------------------------------------------*/
+.container__carsList {
+	width: 78%;
+	border: 2px solid black;
+}
+
+.carsList__carItem {
+	background: white;
+	display: flex;
+	flex-direction: column;
+}
+/*-----------------------------------------------------*/
+.carItem__head {
+	display: flex;
+	/*justify-content: space-between;*/
+}
+
+.carItem__head--img {
+	width: 30%;
+}
+
+.carItem__head--details {
+	width: 70%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/*-----------------------------------------------------*/
+.carItem__main {
+	display: flex;
+	justify-content: space-between;
+}
+
+.carItem__main--charact {
+	margin-left: 12px;
+}
+
+.carItem__main--charact ul {
+	list-style: none;
+	margin-top: 20px;
+}
+
+.carItem__main--charact ul li {
+	margin: 0px 12px 12px 0px;
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+}
+
+.carItem__main--charact ul li img {
+	width: 20px;
+	height: 20px;
+	object-fit: cover;
+}
+
+.carItem__main--rates {
+	margin-right: 12px;
+}
+
+.carItem__main--rates ul {
+	list-style: none;
+	margin-top: 20px;
+}
+
+.carItem__main--rates ul li {
+	margin: 0px 35px 35px 0px;	
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+}
+
+/*-----------------------------------------------------*/
+/*-----------------------------------------------------*/
