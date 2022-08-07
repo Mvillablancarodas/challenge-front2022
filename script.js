@@ -1,14 +1,76 @@
 "use strict";
 
-const carsList = document.querySelector(".container__carsList");
+const select = document.querySelector(".select");
+const carsList = document.querySelector(".carsList");
 
-const createCar = () => {
+const getInfo = () => {
+	return new Promise (resolve => {
+		let cars = {};
+
+		fetch("carsJSON.json")
+		.then((res) => {
+			return res.json();
+		})
+		.then((res) => {
+			cars = res["cars"];
+
+			let boolean = true;
+			for (let group in cars) {
+				if (boolean) {
+					deleteCar();
+					boolean = false;
+				}
+				createCar(cars[group]["Company1"]);
+				createCar(cars[group]["Company2"]);
+
+				const option = document.createElement("OPTION");
+				option.textContent = group;
+				select.appendChild(option);
+			}
+			boolean = true;
+		})
+
+		select.addEventListener("change", e => {
+			const group = select.options[select.selectedIndex].text;
+			console.log(cars);
+			if (group === "All") {
+				let boolean = true;
+				for (let gr in cars) {
+					if (boolean) {
+						deleteCar();
+						boolean = false;
+					}
+					createCar(cars[gr]["Company1"]);
+					createCar(cars[gr]["Company2"]);
+				}
+				boolean = true;
+			} else {
+				deleteCar();
+				createCar(cars[group]["Company1"]);
+				createCar(cars[group]["Company2"]);
+			}
+		})
+
+		resolve("hola");
+	})	
+}
+
+getInfo();
+
+/*getInfo().then(result => {
+	console.log(result);
+	setTimeout(()=>console.log(result[0]["Company1"]), 4000)
+})*/
+const createCar = (company) => {
 	const carItem = document.createElement("DIV");
+	carItem.classList.add("carItem");
 //--------------------------------------------------------
 	const carImg = document.createElement("DIV");
 	const img = document.createElement("IMG");
 
-	img.src = "2020-kia-rio-s-sedan-grey_featured.webp";
+	img.src = `${company["PictureURL"]}`;
+
+	carImg.classList.add("carImg");
 
 	carImg.appendChild(img);
 //-------------------------------------------------------
@@ -20,17 +82,21 @@ const createCar = () => {
 	const name = document.createElement("H5");
 	const button = document.createElement("BUTTON");
 	const imgButton = document.createElement("IMG");
-	
-	category.textContent = "Economy";
-	group.textContent = "GROUP A (ECAR)";
-	name.textContent = "KIA RIO OR SIMILAR";
+	const textButton = document.createElement("P");
+
+	category.textContent = `${company["Features2"]["category"]}`;
+	group.textContent = `GROUP ${company["VehGroup"]} (${company["Code"]})`;
+	name.textContent = `${company["Name"]}`.toUpperCase();
 	imgButton.src = "okey.png";
-	button.textContent = "Book now!";
+	textButton.textContent = "Book now!";
+
+	carDetails.classList.add("carDetails");
 
 	details.appendChild(category);
 	details.appendChild(group);
 	details.appendChild(name);
 	button.appendChild(imgButton);
+	button.appendChild(textButton);
 
 	carDetails.appendChild(details);
 	carDetails.appendChild(button);
@@ -51,14 +117,20 @@ const createCar = () => {
 	const imgDoors = document.createElement("IMG");
 	const imgTransmission = document.createElement("IMG");
 	const imgAir = document.createElement("IMG");
+	const textSeats = document.createElement("P");
+	const textLSuitcase = document.createElement("P");
+	const textSSuitcase = document.createElement("P");
+	const textDoors = document.createElement("P");
+	const textTransmission = document.createElement("P");
+	const textAir = document.createElement("P");
 
 	characteristics.textContent = "CHARACTERISTICS";
-	seats.textContent = "5 seats";
-	lSuitcase.textContent = "1 large suitcase";
-	sSuitcase.textContent = "1 small suitcase";
-	doors.textContent = "4 doors";
-	transmission.textContent = "Automatic transmission";
-	air.textContent = "Air Conditioning";
+	textSeats.textContent = `${company["Features2"]["seats"]} seats`;
+	textLSuitcase.textContent = `${company["Features2"]["largeSuitcase"]} large suitcase`;
+	textSSuitcase.textContent = `${company["Features2"]["smallSuitcase"]} small suitcase`;
+	textDoors.textContent = `${company["Features2"]["doors"]} doors`;
+	textTransmission.textContent = `${company["Features2"]["transmition"]} transmission`;
+	textAir.textContent = `${company["Features2"]["air"]}`;
 	imgSeats.src = "assets/images/seats.svg";
 	imgLSuitcase.src = "assets/images/luggage.svg";
 	imgSSuitcase.src = "assets/images/bag.svg";
@@ -66,12 +138,21 @@ const createCar = () => {
 	imgTransmission.src = "assets/images/transmision.svg";
 	imgAir.src = "assets/images/air-conditioning.svg";
 
+	carCharact.classList.add("carCharact");
+
 	seats.appendChild(imgSeats);
 	lSuitcase.appendChild(imgLSuitcase);
 	sSuitcase.appendChild(imgSSuitcase);
 	doors.appendChild(imgDoors);
 	transmission.appendChild(imgTransmission);
 	air.appendChild(imgAir);
+
+	seats.appendChild(textSeats);
+	lSuitcase.appendChild(textLSuitcase);
+	sSuitcase.appendChild(textSSuitcase);
+	doors.appendChild(textDoors);
+	transmission.appendChild(textTransmission);
+	air.appendChild(textAir);
 
 	listCharact.appendChild(seats);
 	listCharact.appendChild(lSuitcase);
@@ -84,29 +165,33 @@ const createCar = () => {
 	carCharact.appendChild(listCharact);
 //------------------------------------------------------
 	const carRates = document.createElement("DIV");
+	carRates.classList.add("carRates");
 
 	const availRates = document.createElement("H4");
 	availRates.textContent = "AVAILABLE RATES";
 	const listRates = document.createElement("UL");
 
-	const arrayRates = [
-	"  Manual transmission",
-	"  5 seats",
-	"  Convertibles",
-	"  Automatic transmission",
-	"  7 seats or more"
-	];
+	let rates = company["Rates"];
+	let arrayRates = [];
+	for (let rate in rates) {
+		console.log(rate);
+		let name = rates[`${rate}`]["RateData"]["name"];
+		console.log(name);
+		arrayRates.push(`${rate} - ${name}`);
+	}
+	
 	const fragment = document.createDocumentFragment();
 	for (let i = 0; i < arrayRates.length; i++) {
 		const rate = document.createElement("LI");
 		const labRate = document.createElement("LABEL");
 		const inpRate = document.createElement("INPUT");
+		const textRate = document.createElement("P");
 		const pRate = document.createElement("P");
 		const divRate = document.createElement("DIV");
 		const typeCurrency = document.createElement("P");
 		const valueCurrency = document.createElement("P");
 
-		labRate.textContent = `${arrayRates[i]}`;
+		textRate.textContent = `${arrayRates[i]}`;
 		pRate.textContent = "Rate Inclusions";
 		typeCurrency.textContent = "USD";
 		valueCurrency.textContent = "725";
@@ -114,6 +199,7 @@ const createCar = () => {
 		inpRate.name = "tipo";
 
 		labRate.appendChild(inpRate);
+		labRate.appendChild(textRate);
 		divRate.appendChild(typeCurrency);
 		divRate.appendChild(valueCurrency);
 
@@ -122,6 +208,10 @@ const createCar = () => {
 		rate.appendChild(divRate);
 
 		fragment.appendChild(rate);
+
+		pRate.addEventListener("click", () => {
+			modalRateInclusions();
+		})
 	}
 
 	listRates.appendChild(fragment);
@@ -137,4 +227,17 @@ const createCar = () => {
 	carsList.appendChild(carItem);
 }
 
-createCar();
+const deleteCar = () => {
+	let carsArray = document.querySelectorAll(".carsList > .carItem");
+	if (carsArray.length !== 0) {
+		for (let i = 0; i < carsArray.length; i++) {
+			carsList.removeChild(carsArray[i]);
+		}
+	} else {
+		console.log("Nothing");
+	}
+}
+
+const modalRateInclusions = () => {
+
+}
