@@ -10,7 +10,7 @@
 /*-----------------------------------------------------*/
 /*-----------------------------------------------------*/
 .container__filter {
-	width: 1024px;
+	width: 1048px;
 	background: white;
 	padding: 20px 35px 20px 55px;
 	display: flex;
@@ -52,7 +52,7 @@
 /*-----------------------------------------------------*/
 /*-----------------------------------------------------*/
 .container__carsList {
-	width: 1000px;
+	width: 1024px;
 }
 
 .carsList__carItem {
@@ -195,13 +195,12 @@
 	letter-spacing: 0.5px;
 }
 
-.carItem__main--rates ul li a {
+.carItem__main--rates ul li p {
 	justify-self: end;
 	color: #ca1515;
 	font-size: 14px;
 	letter-spacing: 0.8px;
 	font-weight: 600;
-	text-decoration: none;
 }
 
 .carItem__main--rates ul li div {
