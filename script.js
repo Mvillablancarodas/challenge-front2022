@@ -3,64 +3,171 @@
 const select = document.querySelector(".select");
 const carsList = document.querySelector(".carsList");
 
+const check1 = document.querySelector(".check1");
+const check2 = document.querySelector(".check2");
+const check3 = document.querySelector(".check3");
+const check4 = document.querySelector(".check4");
+const check5 = document.querySelector(".check5");
+
 const getInfo = () => {
-	return new Promise (resolve => {
-		let cars = {};
+	let cars = {};
+	let groups = [];
 
-		fetch("carsJSON.json")
-		.then((res) => {
-			return res.json();
-		})
-		.then((res) => {
-			cars = res["cars"];
+	fetch("carsJSON.json")
+	.then((res) => {
+		return res.json();
+	})
+	.then((res) => {
+		cars = res["cars"];
 
+		let boolean = true;
+		for (let group in cars) {
+			if (boolean) {
+				deleteCar();
+				boolean = false;
+			}
+			createCar(cars[group]["Company1"]);
+			createCar(cars[group]["Company2"]);
+
+			const option = document.createElement("OPTION");
+			option.textContent = group;
+			select.appendChild(option);
+
+			groups.push(cars[group]);
+		}
+		boolean = true;
+	})
+
+	select.addEventListener("change", e => {
+		check1.checked = false;
+		check2.checked = false;
+		check3.checked = false;
+		check4.checked = false;
+		check5.checked = false;
+
+		const group = select.options[select.selectedIndex].text;
+		console.log(cars);
+		if (group === "All") {
 			let boolean = true;
-			for (let group in cars) {
+			for (let gr in cars) {
 				if (boolean) {
 					deleteCar();
+					groups = [];
 					boolean = false;
 				}
-				createCar(cars[group]["Company1"]);
-				createCar(cars[group]["Company2"]);
+				createCar(cars[gr]["Company1"]);
+				createCar(cars[gr]["Company2"]);
 
-				const option = document.createElement("OPTION");
-				option.textContent = group;
-				select.appendChild(option);
+				groups.push(cars[gr]);
 			}
 			boolean = true;
-		})
+		} else {
+			deleteCar();
+			groups = [];
+			createCar(cars[group]["Company1"]);
+			createCar(cars[group]["Company2"]);
 
-		select.addEventListener("change", e => {
-			const group = select.options[select.selectedIndex].text;
-			console.log(cars);
-			if (group === "All") {
-				let boolean = true;
-				for (let gr in cars) {
-					if (boolean) {
-						deleteCar();
-						boolean = false;
-					}
-					createCar(cars[gr]["Company1"]);
-					createCar(cars[gr]["Company2"]);
-				}
-				boolean = true;
-			} else {
-				deleteCar();
-				createCar(cars[group]["Company1"]);
-				createCar(cars[group]["Company2"]);
-			}
-		})
+			groups.push(cars[group]);
+		}
+	})
 
-		resolve("hola");
-	})	
+	//Manual Transmission
+	check1.addEventListener("click", () => {
+		console.log(groups);
+		const filt1 = groups.filter(g => g["Company1"]["TransmissionType"] === "Manual");
+		const filt2 = groups.filter(g => g["Company2"]["TransmissionType"] === "Manual");
+		console.log(filt1);
+		console.log(filt2);
+		const filt = filt1.concat(filt2);
+		console.log(filt);
+		groups = filt;
+
+		deleteCar();
+
+		for (let i = 0; i < groups.length; i++) {
+			console.log(`Vuelta ${i}`);
+			createCar(cars[i]["Company1"]);
+			createCar(cars[i]["Company2"]);	
+		}	
+	})
+	//5 seats
+	check2.addEventListener("click", () => {
+		console.log(groups);
+		const filt1 = groups.filter(g => g["Company1"]["TransmissionType"] === "Manual");
+		const filt2 = groups.filter(g => g["Company2"]["TransmissionType"] === "Manual");
+		console.log(filt1);
+		console.log(filt2);
+		const filt = filt1.concat(filt2);
+		console.log(filt);
+		groups = filt;
+
+		deleteCar();
+
+		for (let i = 0; i < groups.length; i++) {
+			console.log(`Vuelta ${i}`);
+			createCar(cars[i]["Company1"]);
+			createCar(cars[i]["Company2"]);	
+		}
+	})
+	//Convertibles
+	check3.addEventListener("click", () => {
+		console.log(groups);
+		const filt1 = groups.filter(g => g["Company1"]["TransmissionType"] === "Manual");
+		const filt2 = groups.filter(g => g["Company2"]["TransmissionType"] === "Manual");
+		console.log(filt1);
+		console.log(filt2);
+		const filt = filt1.concat(filt2);
+		console.log(filt);
+		groups = filt;
+
+		deleteCar();
+
+		for (let i = 0; i < groups.length; i++) {
+			console.log(`Vuelta ${i}`);
+			createCar(cars[i]["Company1"]);
+			createCar(cars[i]["Company2"]);	
+		}
+	})
+	//Automatic transmission
+	check4.addEventListener("click", () => {
+		console.log(groups);
+		const filt1 = groups.filter(g => g["Company1"]["TransmissionType"] === "Manual");
+		const filt2 = groups.filter(g => g["Company2"]["TransmissionType"] === "Manual");
+		console.log(filt1);
+		console.log(filt2);
+		const filt = filt1.concat(filt2);
+		console.log(filt);
+		groups = filt;
+
+		deleteCar();
+
+		for (let i = 0; i < groups.length; i++) {
+			console.log(`Vuelta ${i}`);
+			createCar(cars[i]["Company1"]);
+			createCar(cars[i]["Company2"]);	
+		}
+	})
+	//7 seats or more
+	check5.addEventListener("click", () => {
+		console.log(groups);
+		const filt1 = groups.filter(g => g["Company1"]["TransmissionType"] === "Manual");
+		const filt2 = groups.filter(g => g["Company2"]["TransmissionType"] === "Manual");
+		console.log(filt1);
+		console.log(filt2);
+		const filt = filt1.concat(filt2);
+		console.log(filt);
+		groups = filt;
+
+		deleteCar();
+
+		for (let i = 0; i < groups.length; i++) {
+			console.log(`Vuelta ${i}`);
+			createCar(cars[i]["Company1"]);
+			createCar(cars[i]["Company2"]);	
+		}
+	})
 }
 
-getInfo();
-
-/*getInfo().then(result => {
-	console.log(result);
-	setTimeout(()=>console.log(result[0]["Company1"]), 4000)
-})*/
 const createCar = (company) => {
 	const carItem = document.createElement("DIV");
 	carItem.classList.add("carItem");
@@ -174,9 +281,7 @@ const createCar = (company) => {
 	let rates = company["Rates"];
 	let arrayRates = [];
 	for (let rate in rates) {
-		console.log(rate);
 		let name = rates[`${rate}`]["RateData"]["name"];
-		console.log(name);
 		arrayRates.push(`${rate} - ${name}`);
 	}
 	
@@ -241,3 +346,6 @@ const deleteCar = () => {
 const modalRateInclusions = () => {
 
 }
+
+getInfo();
+
