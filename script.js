@@ -1,5 +1,6 @@
 "use strict";
 
+const container = document.querySelector(".container");
 const select = document.querySelector(".select");
 const carsList = document.querySelector(".carsList");
 
@@ -91,12 +92,10 @@ const getInfo = () => {
 		deleteCar();
 
 		for (let i = 0; i < filt1.length; i++) {
-		
 			createCar(filt1[i]);	
 		}
 
 		for (let i = 0; i < filt2.length; i++) {
-		
 			createCar(filt2[i]);	
 		}	
 	})
@@ -120,12 +119,10 @@ const getInfo = () => {
 		deleteCar();
 
 		for (let i = 0; i < filt1.length; i++) {
-		
 			createCar(filt1[i]);	
 		}
 
 		for (let i = 0; i < filt2.length; i++) {
-		
 			createCar(filt2[i]);	
 		}
 	})
@@ -149,12 +146,10 @@ const getInfo = () => {
 		deleteCar();
 
 		for (let i = 0; i < filt1.length; i++) {
-		
 			createCar(filt1[i]);	
 		}
 
 		for (let i = 0; i < filt2.length; i++) {
-		
 			createCar(filt2[i]);	
 		}
 	})
@@ -178,12 +173,10 @@ const getInfo = () => {
 		deleteCar();
 
 		for (let i = 0; i < filt1.length; i++) {
-		
 			createCar(filt1[i]);	
 		}
 
 		for (let i = 0; i < filt2.length; i++) {
-		
 			createCar(filt2[i]);	
 		}
 	})
@@ -207,12 +200,10 @@ const getInfo = () => {
 		deleteCar();
 
 		for (let i = 0; i < filt1.length; i++) {
-		
 			createCar(filt1[i]);	
 		}
 
 		for (let i = 0; i < filt2.length; i++) {
-		
 			createCar(filt2[i]);	
 		}
 	})
@@ -330,9 +321,12 @@ const createCar = (company) => {
 
 	let rates = company["Rates"];
 	let arrayRates = [];
+	//let arrayRateInclusions = [];
 	for (let rate in rates) {
 		let name = rates[`${rate}`]["RateData"]["name"];
 		arrayRates.push(`${rate} - ${name}`);
+
+		//arrayRateInclusions = rates[`${rate}`]["RateData"]["inclusions"];
 	}
 	
 	const fragment = document.createDocumentFragment();
@@ -353,6 +347,8 @@ const createCar = (company) => {
 		inpRate.type = "radio";
 		inpRate.name = "tipo";
 
+		pRate.classList.add("pRate");
+
 		labRate.appendChild(inpRate);
 		labRate.appendChild(textRate);
 		divRate.appendChild(typeCurrency);
@@ -365,7 +361,7 @@ const createCar = (company) => {
 		fragment.appendChild(rate);
 
 		pRate.addEventListener("click", () => {
-			modalRateInclusions();
+			modalRate(arrayRates[i]);
 		})
 	}
 
@@ -393,8 +389,60 @@ const deleteCar = () => {
 	}
 }
 
-const modalRateInclusions = () => {
+const modalRate = (arrayRates) => {
+	if (document.querySelectorAll(".container > .modalRate").length !== 0) {
+		const oldModalRate = document.querySelector(".modalRate");
+		container.removeChild(oldModalRate);
+	}
+	const modalRate = document.createElement("DIV");
+	const boxRate = document.createElement("DIV");
+	const titRate = document.createElement("H3");
+	const subtitRate = document.createElement("H3");
+	const incList = document.createElement("UL");
 
+	const quit = document.createElement("DIV");
+	const imgQuit = document.createElement("IMG");
+
+	titRate.textContent = "Rate Information";
+	subtitRate.textContent = `${arrayRates}`;
+
+	modalRate.classList.add("modalRate");
+	boxRate.classList.add("boxRate");
+	quit.classList.add("quit");
+
+	imgQuit.setAttribute("src", "equis.png");
+
+	/*const fragment = document.createDocumentFragment();
+	for (let i = 0; i < arrayRateInclusions.length; i++) {
+		const incItem = document.createElement("LI");
+		const imgItem = document.createElement("IMG");
+		const textItem = document.createElement("P");
+
+		textItem.textContent = `${arrayRateInclusions[i]}`;
+
+		incItem.appendChild(imgItem);
+		incItem.appendChild(textItem);
+
+		fragment.appendChild(incItem);
+	}
+
+	incList.appendChild(fragment);*/
+
+	quit.appendChild(imgQuit);
+	boxRate.appendChild(quit);
+	boxRate.appendChild(titRate);
+	boxRate.appendChild(subtitRate);
+	//boxRate.appendChild(incList);
+
+	modalRate.appendChild(boxRate);
+	container.appendChild(modalRate);
+
+	document.body.style.overflowY = "hidden";
+
+	quit.addEventListener("click", () => {
+		container.removeChild(modalRate);
+		document.body.style.overflowY = "visible";
+	})	
 }
 
 getInfo();

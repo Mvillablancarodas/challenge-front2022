@@ -241,3 +241,34 @@ body {
 }
 /*-----------------------------------------------------*/
 /*-----------------------------------------------------*/
+.modalRate {
+	height: 100vh;
+	width: 100vw;
+	background: rgba(96, 96, 96, 0.6);
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.boxRate {
+	height: 50%;
+	width: 50%;
+	background: white;	
+	border-radius: 15px;
+	position: relative;
+}
+
+.quit {
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	background:	lightgrey;
+}
+
+.quit img {
+	width: 15px;
+	height: 15px;
+}
